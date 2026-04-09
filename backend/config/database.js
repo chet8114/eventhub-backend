@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+require('mysql2'); // Explicitly require to fix Vercel \"Please install mysql2 package manually\" error
 require('dotenv').config();
 
 const sequelize = new Sequelize(
