@@ -1,23 +1,5 @@
 # EventHub — Event Management System
 
-🌐 **Live Application**
-
-🔗 Frontend Live Demo (Vercel):  
-https://eventhub-h3v8q9bxr-chethankarnati-gmailcoms-projects.vercel.app
-
-This full-stack Event Management System is deployed online and supports:
-
-- Event browsing & booking
-- QR ticket generation
-- Role-based dashboards (Admin / Staff / User)
-- Real-time QR entry validation
-- Attendance tracking system
-- Admin analytics dashboard
-
-No local setup required — accessible directly from browser.
-
----
-
 A complete full-stack Event Management System with role-based authentication, QR-based event entry validation, and admin analytics dashboard.
 
 ## 🛠️ Tech Stack
@@ -38,7 +20,7 @@ app/
 ├── backend/
 │   ├── config/         # Database configuration
 │   ├── controllers/    # Route handlers
-│   ├── middleware/     # Auth & role middleware
+│   ├── middleware/      # Auth & role middleware
 │   ├── models/         # Sequelize models
 │   ├── routes/         # API route definitions
 │   ├── seeders/        # Database seeding
@@ -112,7 +94,6 @@ npm run seed
 ```
 
 This creates:
-
 - **Admin**: admin@eventmanager.com / admin123
 - **Staff**: staff@eventmanager.com / staff123
 - **User**: user@eventmanager.com / user123
@@ -135,16 +116,14 @@ Open **http://localhost:5173** in your browser.
 ## 👥 Roles & Features
 
 ### User
-
 - Register & login
 - Browse / search / filter events
-- Book tickets (1–10 per event)
+- Book tickets (1-10 per event)
 - View & download QR code tickets
 - Cancel bookings (before event date)
 - Receive booking confirmation email
 
 ### Admin
-
 - Dashboard with analytics (users, events, bookings, attendance)
 - Create / edit / delete events
 - Set event capacity
@@ -153,7 +132,6 @@ Open **http://localhost:5173** in your browser.
 - Export attendance data as CSV
 
 ### Staff
-
 - QR scanner interface (webcam/mobile camera)
 - Validate ticket authenticity in real-time
 - Auto-mark attendance on scan
@@ -162,78 +140,66 @@ Open **http://localhost:5173** in your browser.
 
 ## 📊 Database Schema
 
-| Table | Key Columns |
-|------|-------------|
-| users | id, name, email, password (bcrypt), role |
-| roles | id, role_name (admin/user/staff) |
-| events | id, title, description, location, event_date, capacity |
-| bookings | id (UUID), user_id, event_id, qr_code_data, booking_status |
+| Table           | Key Columns                                   |
+| --------------- | --------------------------------------------- |
+| users           | id, name, email, password (bcrypt), role       |
+| roles           | id, role_name (admin/user/staff)               |
+| events          | id, title, description, location, event_date, capacity |
+| bookings        | id (UUID), user_id, event_id, qr_code_data, booking_status |
 | attendance_logs | id, booking_id, scan_time, scanned_by_staff_id |
 
 ## 🔐 API Endpoints
 
 ### Auth
-
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
+- `POST /api/auth/register` — Register new user
+- `POST /api/auth/login` — Login
+- `GET /api/auth/me` — Get current profile
 
 ### Events
-
-- `GET /api/events`
-- `GET /api/events/:id`
-- `POST /api/events`
-- `PUT /api/events/:id`
-- `DELETE /api/events/:id`
+- `GET /api/events` — List events (with search, filter, pagination)
+- `GET /api/events/:id` — Get event details
+- `POST /api/events` — Create event (admin)
+- `PUT /api/events/:id` — Update event (admin)
+- `DELETE /api/events/:id` — Delete event (admin)
 
 ### Bookings
-
-- `POST /api/bookings`
-- `GET /api/bookings/my`
-- `PUT /api/bookings/:id/cancel`
-- `GET /api/bookings/:id/qr`
+- `POST /api/bookings` — Book tickets (user)
+- `GET /api/bookings/my` — My bookings
+- `PUT /api/bookings/:id/cancel` — Cancel booking
+- `GET /api/bookings/:id/qr` — Get QR code
 
 ### Staff
-
-- `POST /api/staff/scan`
-- `GET /api/staff/history`
+- `POST /api/staff/scan` — Scan & validate QR
+- `GET /api/staff/history` — Scan history
 
 ### Admin
-
-- `GET /api/admin/dashboard`
-- `GET /api/admin/users`
-- `PUT /api/admin/users/:id/role`
-- `GET /api/admin/attendance`
-- `GET /api/admin/attendance/export`
+- `GET /api/admin/dashboard` — Analytics
+- `GET /api/admin/users` — All users
+- `PUT /api/admin/users/:id/role` — Assign role
+- `GET /api/admin/attendance` — Attendance logs
+- `GET /api/admin/attendance/export` — CSV export
 
 ## 🚀 Deployment
 
 ### Frontend (Vercel)
-
 ```bash
 cd frontend
 npm run build
+# Deploy the `dist/` folder to Vercel
 ```
 
-Deploy the `dist/` folder to Vercel.
-
 ### Backend (Render)
-
 - Set environment variables in Render dashboard
 - Start command: `node server.js`
 - Build command: `npm install`
 
 ### Database
-
-Use managed MySQL:
-
-- PlanetScale
-- AWS RDS
-- Railway
-
-Update `.env` accordingly.
+- Use a managed MySQL service (PlanetScale, AWS RDS, etc.)
+- Update `DB_HOST`, `DB_USER`, `DB_PASS` in backend `.env`
 
 ## 📧 Email Configuration (Optional)
+
+To enable booking confirmation emails, configure SMTP in `backend/.env`:
 
 ```env
 SMTP_HOST=smtp.gmail.com
@@ -243,4 +209,4 @@ SMTP_PASS=your-app-password
 SMTP_FROM=noreply@eventmanager.com
 ```
 
-The app works fully without email — it logs a skip message instead.
+The app works fully without email — it will log a skip message instead.
