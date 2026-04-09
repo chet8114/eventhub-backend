@@ -34,21 +34,26 @@ app.use((err, req, res, next) => {
 // Start server
 const PORT = process.env.PORT || 5000;
 
-const start = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('✅ Database connected successfully');
+if (require.main === module) {
+  const start = async () => {
+    try {
+      await sequelize.authenticate();
+      console.log('✅ Database connected successfully');
 
-    await sequelize.sync({ alter: true });
-    console.log('✅ Database synced');
+      await sequelize.sync({ alter: true });
+      console.log('✅ Database synced');
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error('❌ Failed to start server:', error);
-    process.exit(1);
-  }
-};
+      app.listen(PORT, () => {
+        console.log(`🚀 Server running on http://localhost:${PORT}`);
+      });
+    } catch (error) {
+      console.error('❌ Failed to start server:', error);
+      process.exit(1);
+    }
+  };
 
-start();
+  start();
+}
+
+// Export for Vercel setup
+module.exports = app;
