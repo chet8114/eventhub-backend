@@ -20,6 +20,11 @@ app.use('/api/bookings', require('./routes/bookings'));
 app.use('/api/staff', require('./routes/staff'));
 app.use('/api/admin', require('./routes/admin'));
 
+// Root route
+app.get('/', (req, res) => {
+  res.send('Event Management System API is live!');
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
